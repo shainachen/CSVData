@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -11,6 +12,7 @@ public class CSVData {
 	
 	public static void main(String[] args){
 		double[][] tester={{1,2,3},{4,5,6},{23,8,9}};
+		System.out.println(Arrays.toString(getRows(tester, 0,2)));
 	}
 	/***
 	 * Returns a new CSV Data object for the file, ignoring lines at the top. Input String array
@@ -86,27 +88,76 @@ public class CSVData {
 		int rowIndex=0;
 		for(int row=startRow; row<endRow; row++){
 			double[] singleRow=getRow(arr, row);
-			rows=addRowValue(arr,singleRow,rowIndex);
+			rows=addRowValue(rows,singleRow,rowIndex);
+			System.out.println(Arrays.toString(rows));
 			rowIndex++;
 		}
 		return rows;
 	}
-	
+	/**
+	 * Returns a 2d array in String
+	 * @param arr	
+	 * 			the array to convert to String
+	 * @return 
+	 * 			String array 
+	 */
+	public static String[][] toString(double[][] arr){
+		String[][]values=new String[arr.length][arr[0].length];
+		int rowCounter=0;
+		for(int col=0; col<arr.length; col++){
+			
+			values[col][col]=Arrays.toString(arr[col][col]);
+		}
+	}
+	/**
+	 * Adds a row of values in a 1d double array to 2d double array
+	 * @param arr	2d array to add a row of values to
+	 * @param values	1d double array of values to add to 2d array
+	 * @param row	the row index of the 2d array to add the row values to
+	 * @return	2d double array with the added row of values
+	 */
 	public static double[][] addRowValue(double[][] arr, double[] values, int row){
 		for(int i=0; i<values.length; i++){
 			arr[row][i]=values[i];
 		}
 		return arr;
 	}
-	
+	/**
+	 * Return a 2d array representing the cols of arr starting with startCol up to but not
+	 * including endCol.
+	 * @param arr
+	 * 			the array to extract columns from
+	 * @param startCol
+	 * 			index of starting column
+	 * @param endCol
+	 * 			index of ending column (return value does not include this column)
+	 * @return	a 2d array whose size is arr.length by (endCol-startCol) that represents the 
+	 * columns of arr starting with startCol up to but not including endCol
+	 */
 	public static double[][] getCols(double[][] arr, int startCol, int endCol){
 		return null;
 	}
-	
+	/**
+	 *  Return a 2d array representing the cols of arr in the column indexes from the int input 
+	 *  array.
+	 * @param arr
+	 * 			the array to extract columns from
+	 * @param colIndexes
+	 * 			the column indexes from the int input
+	 * @return a 2d array that represents the 
+	 * columns of arr indexes
+	 * 
+	 */
 	public static double[][] getCols(double[][] arr, int[] colIndexes){
 		return null;
 	}
-	
+	/**
+	 *  Return a 2d array representing the cols of arr in the column indexes from the int input 
+	 *  array.
+	 * @param colNames 
+	 * 			String of column Names to extract column data from
+	 * @return a 2d array that represents the columns of String colNames indexes
+	 */
 	public static double[][] getCols(String[] colNames){
 		return null;
 	}
