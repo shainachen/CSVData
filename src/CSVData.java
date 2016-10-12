@@ -8,6 +8,10 @@ import java.util.Arrays;
 public class CSVData {
 	private double[][] data;
 	private String[] columnNames;
+	
+	public static void main(String[] args){
+		double[][] tester={{1,2,3},{4,5,6},{23,8,9}};
+	}
 	/***
 	 * Returns a new CSV Data object for the file, ignoring lines at the top. Input String array
 	 * gives the column names.
@@ -60,5 +64,73 @@ public class CSVData {
 		}
 		return rowValues;
 	}
-
+	
+	public static double[] getRow(double[][]arr, String columnName){
+		return null;
+	}
+	/***
+	 * Returns a 2d array representing the rows of arr starting with startRow up to but
+	 * not including endRow
+	 * @param arr
+	 * 			the array to extract rows from
+	 * @param startRow
+	 * 			index of starting row
+	 * @param endRow
+	 * 			index of ending row (return value does not include this row)
+	 * @return a 2D array whose size is (endRow-startRow) by arr[0].length that
+	 * 			represents the row of arr starting with startRow up to but not including
+	 *			endRow
+	 */
+	public static double[][] getRows(double[][] arr, int startRow, int endRow){
+		double[][] rows=new double[endRow-startRow][arr[0].length];
+		int rowIndex=0;
+		for(int row=startRow; row<endRow; row++){
+			double[] singleRow=getRow(arr, row);
+			rows=addRowValue(arr,singleRow,rowIndex);
+			rowIndex++;
+		}
+		return rows;
+	}
+	
+	public static double[][] addRowValue(double[][] arr, double[] values, int row){
+		for(int i=0; i<values.length; i++){
+			arr[row][i]=values[i];
+		}
+		return arr;
+	}
+	
+	public static double[][] getCols(double[][] arr, int startCol, int endCol){
+		return null;
+	}
+	
+	public static double[][] getCols(double[][] arr, int[] colIndexes){
+		return null;
+	}
+	
+	public static double[][] getCols(String[] colNames){
+		return null;
+	}
+	
+	public static void setColumn(double[][] arr, int columnIndex, double[] vals){
+	
+	}
+	
+	public static void setRow(double[][] arr, int rowIndex, double[] vals){
+		
+	}
+	
+	public static void setValue(double[][] arr, int rowIndex, int columnIndex){
+	
+	}
+	
+	public static String[] getColumnTitles(double[][] arr){
+		return null;
+	}
+	
+	public static double[][] setCSVData(double[][] arr){
+		return null;
+	}
+	public static void saveToFile(String filename){
+		
+	}
 }
