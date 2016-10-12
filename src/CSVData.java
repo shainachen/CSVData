@@ -6,9 +6,28 @@ import java.util.Arrays;
  *
  */
 public class CSVData {
-	public static void main(String[] args){
-		double[][]arr={{1,2,3},{4,5,6},{23,8,9}};
-		System.out.println(Arrays.toString(getRow(arr, 1)));
+	private double[][] data;
+	private String[] columnNames;
+	/***
+	 * Returns a new CSV Data object for the file, ignoring lines at the top. Input String array
+	 * gives the column names.
+	 * @param filename the file to read
+	 * @param numLinesToIgnore number of lines at the top to ignore
+	 * @param columnNames names of the columns
+	 * @return a CSVData object for that file
+	 */
+	public static CSVData readCSVFile(String filename, int numLinesToIgnore, String[] columnNames){
+		return null;
+	}
+	/***
+	 * Returns a new CSV Data object for the file, ignoring lines at the top. It uses the first row
+	 * as the column names. All other data is stored as doubles.
+	 * @param filename the file to read
+	 * @param numLinesToIgnore number of lines at the top to ignore
+	 * @return a CSVData object for that file
+	 */
+	public static CSVData readCSVFile(String filename, int numLinesToIgnore){
+		return null;
 	}
 	
 	/**
