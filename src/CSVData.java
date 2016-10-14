@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * A class to read/wrote numerical CSV files and allow easy access to values
+ * A class to read/write numerical CSV files and allow easy access to values
  * 
  * @author schen625
  *
@@ -71,7 +71,7 @@ public class CSVData {
 	 * @return a CSVData object for that file
 	 */
 	public static CSVData readCSVFile(String filename, int numLinesToIgnore, String[] columnNames) {
-		return null;
+		return new CSVData(filename, columnNames, numLinesToIgnore);
 	}
 
 	/***
@@ -342,8 +342,9 @@ public class CSVData {
 		return this.columnNames;
 	}
 
-	public static double[][] setCSVData(double[][] arr) {
-		return null;
+	public double[][] setCSVData(double[][] arr) {
+		this.data=arr;
+		return this.data;
 	}
 
 	public static void saveToFile(String filename) {
