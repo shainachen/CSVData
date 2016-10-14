@@ -45,10 +45,10 @@ public class CSVData {
 	 * 			the index of the column to extract
 	 * @return a 1D array that's a copy of the row at index column.
 	 */
-	public static double[] getCol(double[][]arr, int column){
-		double[] columnValues=new double[arr.length];
-		for(int row=0; row<arr.length; row++){
-			columnValues[row]=arr[row][column];
+	public double[] getCol(int column){
+		double[] columnValues=new double[this.data.length];
+		for(int row=0; row<this.data.length; row++){
+			columnValues[row]=this.data[row][column];
 		}
 		return columnValues;
 	}
@@ -69,7 +69,7 @@ public class CSVData {
 	}
 	
 	public double[] getRow(String columnName){
-		int row=getIndex(columnNames, columnName);
+		int row=this.getIndex(columnName);
 		return this.getRow(row);
 	}
 	/**
@@ -78,9 +78,9 @@ public class CSVData {
 	 * @param word Word that is being searched for
 	 * @return index location of word in the String array
 	 */
-	public static int getIndex(String[] words, String word){
-		for(int i=0; i<words.length;i++){
-			if(word.equals(words[i]))	return i;
+	public int getIndex(String word){
+		for(int i=0; i<this.columnNames.length;i++){
+			if(word.equals(this.columnNames[i]))	return i;
 		}
 		return -1;
 	}
@@ -97,11 +97,11 @@ public class CSVData {
 	 * 			represents the row of arr starting with startRow up to but not including
 	 *			endRow
 	 */
-	public static double[][] getRows(double[][] arr, int startRow, int endRow){
-		double[][] rows=new double[endRow-startRow][arr.length];
+	public double[][] getRows(int startRow, int endRow){
+		double[][] rows=new double[endRow-startRow][data.length];
 		int rowIndex=0;
 		for(int row=startRow; row<endRow; row++){
-			double[] singleRow=getRow(arr, row);
+			double[] singleRow=this.getRow(row);
 			rows=addRowValue(rows,singleRow,rowIndex);
 			rowIndex++;
 		}
@@ -114,13 +114,13 @@ public class CSVData {
 	 * @return 
 	 * 			String array 
 	 */
-	public static ArrayList<String> toString(double[][] arr){
-		ArrayList<String> values=new ArrayList<String>();
-		for(int rowCounter=0; rowCounter<arr.length; rowCounter++){
-			values.add(Arrays.toString(getRow(arr,rowCounter)));
-		}
-		return values;
-	}
+//	public static ArrayList<String> toString(double[][] arr){
+//		ArrayList<String> values=new ArrayList<String>();
+//		for(int rowCounter=0; rowCounter<arr.length; rowCounter++){
+//			values.add(Arrays.toString(this.getRow(rowCounter)));
+//		}
+//		return values;
+//	}
 	/**
 	 * Adds a row of values in a 1d double array to 2d double array
 	 * @param arr	2d array to add a row of values to
@@ -128,7 +128,7 @@ public class CSVData {
 	 * @param row	the row index of the 2d array to add the row values to
 	 * @return	2d double array with the added row of values
 	 */
-	public static double[][] addRowValue(double[][] arr, double[] values, int row){
+	public double[][] addRowValue(double[][] arr, double[] values, int row){
 		for(int i=0; i<values.length; i++){
 			arr[row][i]=values[i];
 		}
@@ -141,7 +141,7 @@ public class CSVData {
 	 * @param col the col index of the 2d array to add the col values to
 	 * @return  2d double array with the added col of values
 	 */
-	public static double[][] addColValue(double[][] arr, double[] values, int col){
+	public double[][] addColValue(double[][] arr, double[] values, int col){
 		for(int i=0; i<values.length; i++){
 			arr[col][i]=values[i];
 		}
@@ -159,12 +159,12 @@ public class CSVData {
 	 * @return	a 2d array whose size is arr.length by (endCol-startCol) that represents the 
 	 * columns of arr starting with startCol up to but not including endCol
 	 */
-	public static double[][] getCols(double[][] arr, int startCol, int endCol){
-		double[][] cols=new double[endCol-startCol][arr.length];
+	public double[][] getCols(int startCol, int endCol){
+		double[][] cols=new double[endCol-startCol][this.data.length];
 		int colIndex=0;
 		for(int col=startCol; col<endCol; col++){
-			double[] singleCol=getCol(arr, col);
-			cols=addColValue(cols,singleCol,colIndex);
+			double[] singleCol=this.getCol(col);
+			cols=this.addColValue(cols,singleCol,colIndex);
 			colIndex++;
 		}
 		return cols;
@@ -180,8 +180,15 @@ public class CSVData {
 	 * columns of arr indexes
 	 * 
 	 */
-	public static double[][] getCols(double[][] arr, int[] colIndexes){
-		return null;
+	public double[][] getCols(int[] colIndexes){
+		double[][] cols=new double[colIndexes.length][this.data.length];
+		int colIndex=0;
+		for(int i=0; i<colIndexes.length; i++){
+			double[] singleCol=this.getCol(colIndexes[i]);
+			cols=this.addColValue(cols,singleCol,colIndex);
+			colIndex++;
+		}
+		return cols;
 	}
 	/**
 	 *  Return a 2d array representing the cols of arr in the column indexes from the int input 
@@ -190,12 +197,26 @@ public class CSVData {
 	 * 			String of column Names to extract column data from
 	 * @return a 2d array that represents the columns of String colNames indexes
 	 */
-	public static double[][] getCols(String[] colNames){
-		return null;
+	public double[][] getCols(String[] colNames){
+		double[][] cols=new double[colNames.length][this.data.length];
+		int colIndex=0;
+		for(int i=0; i<colNames.length; i++){
+			int index=getIndex(colNames[i]);
+			double[] singleCol=this.getCol(index);
+			cols=this.addColValue(cols,singleCol,colIndex);
+			colIndex++;
+		}
+		return cols;
 	}
 	
-	public static void setColumn(double[][] arr, int columnIndex, double[] vals){
-	
+	public void setColumn(int columnIndex, double[] vals){
+		if(vals.length==this.data.length){
+			int rowIndex=0;
+			for(int i=0; i<vals.length; i++){
+				data[rowIndex][columnIndex]=vals[i];
+				rowIndex++;
+			}
+		}
 	}
 	
 	public static void setRow(double[][] arr, int rowIndex, double[] vals){
