@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -11,8 +12,8 @@ public class CSVData {
 	private String[] columnNames;
 	
 	public static void main(String[] args){
-		double[][] tester={{1,2,3},{4,5,6},{23,8,9}};
-		System.out.println(Arrays.toString(getRows(tester, 0,2)));
+		double[][] tester={{1,2,3},{4,5,6},{23,8,9}, {10,9,5}};
+		System.out.println(toString(getCols(tester, 0,2)));
 	}
 	/***
 	 * Returns a new CSV Data object for the file, ignoring lines at the top. Input String array
@@ -44,7 +45,7 @@ public class CSVData {
 	 * 			the index of the column to extract
 	 * @return a 1D array that's a copy of the row at index column.
 	 */
-	public static double[] getColumn(double[][]arr, int column){
+	public static double[] getCol(double[][]arr, int column){
 		double[] columnValues=new double[arr.length];
 		for(int row=0; row<arr.length; row++){
 			columnValues[row]=arr[row][column];
@@ -84,12 +85,11 @@ public class CSVData {
 	 *			endRow
 	 */
 	public static double[][] getRows(double[][] arr, int startRow, int endRow){
-		double[][] rows=new double[endRow-startRow][arr[0].length];
+		double[][] rows=new double[endRow-startRow][arr.length];
 		int rowIndex=0;
 		for(int row=startRow; row<endRow; row++){
 			double[] singleRow=getRow(arr, row);
 			rows=addRowValue(rows,singleRow,rowIndex);
-			System.out.println(Arrays.toString(rows));
 			rowIndex++;
 		}
 		return rows;
@@ -101,13 +101,12 @@ public class CSVData {
 	 * @return 
 	 * 			String array 
 	 */
-	public static String[][] toString(double[][] arr){
-		String[][]values=new String[arr.length][arr[0].length];
-		int rowCounter=0;
-		for(int col=0; col<arr.length; col++){
-			
-			values[col][col]=Arrays.toString(arr[col][col]);
+	public static ArrayList<String> toString(double[][] arr){
+		ArrayList<String> values=new ArrayList<String>();
+		for(int rowCounter=0; rowCounter<arr.length; rowCounter++){
+			values.add(Arrays.toString(getRow(arr,rowCounter)));
 		}
+		return values;
 	}
 	/**
 	 * Adds a row of values in a 1d double array to 2d double array
@@ -119,6 +118,19 @@ public class CSVData {
 	public static double[][] addRowValue(double[][] arr, double[] values, int row){
 		for(int i=0; i<values.length; i++){
 			arr[row][i]=values[i];
+		}
+		return arr;
+	}
+	/**
+	 * Adds a col of values in a 1d double array to 2d double array
+	 * @param arr   2d array to add a row of values to
+	 * @param values  1d double array of values to add to 2d array
+	 * @param col the col index of the 2d array to add the col values to
+	 * @return  2d double array with the added col of values
+	 */
+	public static double[][] addColValue(double[][] arr, double[] values, int col){
+		for(int i=0; i<values.length; i++){
+			arr[col][i]=values[i];
 		}
 		return arr;
 	}
@@ -135,7 +147,14 @@ public class CSVData {
 	 * columns of arr starting with startCol up to but not including endCol
 	 */
 	public static double[][] getCols(double[][] arr, int startCol, int endCol){
-		return null;
+		double[][] cols=new double[endCol-startCol][arr.length];
+		int colIndex=0;
+		for(int col=startCol; col<endCol; col++){
+			double[] singleCol=getCol(arr, col);
+			cols=addColValue(cols,singleCol,colIndex);
+			colIndex++;
+		}
+		return cols;
 	}
 	/**
 	 *  Return a 2d array representing the cols of arr in the column indexes from the int input 
