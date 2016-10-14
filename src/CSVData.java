@@ -60,16 +60,29 @@ public class CSVData {
 	 * 			the index of the row to extract
 	 * @return a 1D array that's a copy of the row at index row.
 	 */
-	public static double[] getRow(double[][]arr, int row){
-		double[] rowValues=new double[arr[0].length];
-		for(int column=0; column<arr[0].length; column++){
-			rowValues[column]=arr[row][column];
+	public double[] getRow(int row){
+		double[] rowValues=new double[data[0].length];
+		for(int column=0; column<data[0].length; column++){
+			rowValues[column]=data[row][column];
 		}
 		return rowValues;
 	}
 	
-	public static double[] getRow(double[][]arr, String columnName){
-		return null;
+	public double[] getRow(String columnName){
+		int row=getIndex(columnNames, columnName);
+		return this.getRow(row);
+	}
+	/**
+	 * Returns index of word in a input String array
+	 * @param words String array to search word from
+	 * @param word Word that is being searched for
+	 * @return index location of word in the String array
+	 */
+	public static int getIndex(String[] words, String word){
+		for(int i=0; i<words.length;i++){
+			if(word.equals(words[i]))	return i;
+		}
+		return -1;
 	}
 	/***
 	 * Returns a 2d array representing the rows of arr starting with startRow up to but
