@@ -11,10 +11,6 @@ public class CSVData {
 	private double[][] data;
 	private String[] columnNames;
 	
-	public static void main(String[] args){
-		double[][] tester={{1,2,3},{4,5,6},{23,8,9}, {10,9,5}};
-		System.out.println(toString(getCols(tester, 0,2)));
-	}
 	/***
 	 * Returns a new CSV Data object for the file, ignoring lines at the top. Input String array
 	 * gives the column names.
@@ -208,7 +204,11 @@ public class CSVData {
 		}
 		return cols;
 	}
-	
+	/**
+	 * Sets column values in input columnIndex to values given in array vals
+	 * @param columnIndex index where new values should be set
+	 * @param vals the new values of that column
+	 */
 	public void setColumn(int columnIndex, double[] vals){
 		if(vals.length==this.data.length){
 			int rowIndex=0;
@@ -218,17 +218,32 @@ public class CSVData {
 			}
 		}
 	}
-	
-	public static void setRow(double[][] arr, int rowIndex, double[] vals){
-		
+	/**
+	 * Sets row values in input rowIndex to values given in array vals
+	 * @param rowIndex index where new values should be set
+	 * @param vals the new values of that row
+	 */
+	public void setRow(int rowIndex, double[] vals){
+		if(vals.length==this.data[0].length){
+			int colIndex=0;
+			for(int i=0; i<vals.length; i++){
+				this.data[rowIndex][colIndex]=vals[i];
+				colIndex++;
+			}
+		}
+	}
+	/**
+	 * Sets value at input row and column index to input value
+	 * @param rowIndex	row index where new value is entered
+	 * @param columnIndex column index where new value is entered
+	 * @param value	value to be set in the row and column indexes
+	 */
+	public void setValue(int rowIndex, int columnIndex, int value){
+		this.data[rowIndex][columnIndex]=value;
 	}
 	
-	public static void setValue(double[][] arr, int rowIndex, int columnIndex){
-	
-	}
-	
-	public static String[] getColumnTitles(double[][] arr){
-		return null;
+	public String[] getColumnTitles(){
+		return this.columnNames;
 	}
 	
 	public static double[][] setCSVData(double[][] arr){
