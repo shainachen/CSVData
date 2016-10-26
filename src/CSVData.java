@@ -100,6 +100,7 @@ public class CSVData {
 	 */
 	public double[] getCol(int column) {
 		double[] columnValues = new double[this.data.length];
+		System.out.println(this.data.length);
 		for (int row = 0; row < this.data.length; row++) {
 			columnValues[row] = this.data[row][column];
 		}
@@ -338,6 +339,10 @@ public class CSVData {
 		this.data[rowIndex][columnIndex] = value;
 	}
 
+	public int getNumRows() {
+		return numRows;
+	}
+
 	public String[] getColumnTitles() {
 		return this.columnNames;
 	}
@@ -349,5 +354,15 @@ public class CSVData {
 
 	public static void saveToFile(String filename) {
 		
+	}
+	/**Changes time to elapsed time
+	 * 
+	 * @param values CSVData object with sensor data
+	 */
+	public static void correctTime(CSVData values) {
+		double startTime = values.data[0][0];
+		
+		for (int row = 0; row < values.data.length; row++)
+			values.data[row][0] -= startTime;
 	}
 }
