@@ -346,7 +346,11 @@ public class CSVData {
 	public String[] getColumnTitles() {
 		return this.columnNames;
 	}
-
+	/**
+	 * Sets data array to the CSVData data
+	 * @param arr 2-D array to set CSVData data to
+	 * @return new CSVData data 2-D array
+	 */
 	public double[][] setCSVData(double[][] arr) {
 		this.data=arr;
 		return this.data;
